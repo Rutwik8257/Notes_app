@@ -6,17 +6,20 @@ import { connectDB } from './config/db.js';
 import rateLimiter from './middleware/rateLimiter.js';
 import notesRoutes from './routes/notesRoutes.js';
 
+// ✅ Load environment variables
 dotenv.config();
-const app = express();
-connectDB();
 
+const app = express();
+connectDB(); // ✅ Connect to MongoDB
+
+// ✅ Middleware
 app.use(express.json());
 app.use(rateLimiter);
 
-// ✅ Cleaned-up CORS
+// ✅ CORS Configuration
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://notes-app-cpf3.onrender.com" // Replace with actual domain
+  "https://notes-app-uaru.onrender.com" // ✅ YOUR frontend domain
 ];
 
 app.use(cors({
@@ -30,10 +33,10 @@ app.use(cors({
   credentials: true,
 }));
 
-// ✅ API routes
+// ✅ API Routes
 app.use('/api/notes', notesRoutes);
 
-// ✅ Serve frontend in production
+// ✅ Serve frontend (only in production)
 const __dirname = path.resolve();
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
@@ -43,7 +46,8 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+// ✅ Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`✅ Server is running on port ${PORT}`);
 });
