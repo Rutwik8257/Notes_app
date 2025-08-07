@@ -19,8 +19,9 @@ app.use(rateLimiter);
 // ✅ CORS Configuration
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://notes-app-uaru.onrender.com" // ✅ YOUR frontend domain
+  "https://notes-app-frontend-abc1.onrender.com"
 ];
+
 
 app.use(cors({
   origin: function (origin, callback) {
